@@ -13,11 +13,7 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
     validateInputs();
   }, [userSalaryRequest, userOccupation, userAverageMonthlyIncome]);
 
-  const validateInputs = (card) => {
-    if (!card) {
-      return;
-    
-    }
+  const validateInputs = () => {
     setValidRequestAnIncrease(false);
     setValidSalaryRequest("");
 
@@ -87,9 +83,7 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
               type="number"
               className="input"
               name="amountRequested"
-              placeholder={
-                card.averageMonthlyIncome + " - " + validSalaryRequest
-              }
+              placeholder={validSalaryRequest}
               value={userSalaryRequest}
               onChange={(e) => setUserSalaryRequest(e.target.value)}
             />
