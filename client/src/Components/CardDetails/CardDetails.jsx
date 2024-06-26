@@ -3,13 +3,62 @@ import "./CardDetails.css";
 import { increaseCreditLimit } from "../../apiService";
 
 function CardDetails({ card, onClose, onCardListUpdate }) {
-  const [cardBlockedStatus, setCardBlockedStatus] = useState("");
   const [validRequestAnIncrease, setValidRequestAnIncrease] = useState(false);
   const [validSalaryRequest, setValidSalaryRequest] = useState("");
-  const [updatedCardList, setUpdatedCardList] = useState([]);
+  const [userSalaryRequest, setUserSalaryRequest] = useState("");
+  const [userOccupation, setUserOccupation] = useState("");
+  const [userAverageMonthlyIncome, setUserAverageMonthlyIncome] = useState("");
+
+  useEffect(() => {
+    validateInputs();
+  }, [userSalaryRequest, userOccupation, userAverageMonthlyIncome]);
+
+  const validateInputs = () => {
+    setValidRequestAnIncrease(false);
+    setValidSalaryRequest("");
+
+    if (
+      !userSalaryRequest ||
+      userSalaryRequest <= 0 ||
+      !userOccupation ||
+      !userAverageMonthlyIncome
+    ) {
+      return;
+    }
+
+    const salary = parseFloat(userAverageMonthlyIncome);
+    if (isNaN(salary) || salary < 12000 || salary < 0) {
+      return;
+    }
+
+    let maxAllowedLimit = 0;
+    if (userOccupation === "שכיר") {
+      maxAllowedLimit = Math.round(card.averageMonthlyIncome / 2);
+    } else if (userOccupation === "עצמאי") {
+      maxAllowedLimit = Math.round(card.averageMonthlyIncome / 3);
+    } else {
+      return;
+    }
+
+    if (parseFloat(userSalaryRequest) <= maxAllowedLimit) {
+      setValidRequestAnIncrease(true);
+      setValidSalaryRequest(maxAllowedLimit);
+    }
+  };
 
   const handleIncreaseCreditLimit = () => {
-    increaseCreditLimit(card.cardNumber)
+    const requestedLimit = parseFloat(userSalaryRequest);
+    if (!requestedLimit || isNaN(requestedLimit)) {
+      console.error("Invalid requested amount.");
+      return;
+    }
+
+    increaseCreditLimit({
+      cardNumber: card.cardNumber,
+      requestedLimit: requestedLimit,
+      occupation: userOccupation,
+      averageMonthlyIncome: parseFloat(userAverageMonthlyIncome),
+    })
       .then((updatedCards) => {
         onCardListUpdate(updatedCards);
         console.log("Card list updated successfully.");
@@ -19,66 +68,52 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
       });
   };
 
-  useEffect(() => {
-    if (card.isBlocked || card.occupation === "אחר") {
-      setCardBlockedStatus("true");
-      setValidRequestAnIncrease(false);
-      return;
-    }
-    setCardBlockedStatus("false");
-    setValidRequestAnIncrease(true);
-  }, [card]);
-
-  useEffect(() => {
-    let salaryRequest = card.averageMonthlyIncome;
-    if (card.occupation === "שכיר") {
-      salaryRequest = Math.round(
-        card.averageMonthlyIncome + card.averageMonthlyIncome / 2
-      );
-      setValidSalaryRequest(salaryRequest);
-    }
-    if (card.occupation === "עצמאי") {
-      salaryRequest = Math.round(
-        card.averageMonthlyIncome + card.averageMonthlyIncome / 3
-      );
-      setValidSalaryRequest(salaryRequest);
-    }
-    if (card.occupation === "אחר") {
-      setValidSalaryRequest("");
-    }
-  }, [card]);
-
   return (
     <>
       <div className="overlay" onClick={onClose}></div>
       <div className="detailsContainer">
         <h1>Card Details</h1>
         <div className="cardContent">
-          {validRequestAnIncrease && (
-            <div className="salaryIncrease">
-              <p>
-                <span className="boldLabel">Amount requested: </span>{" "}
-              </p>
-              <input
-                type="text"
-                className="input"
-                name="amountRequested"
-                placeholder={
-                  card.averageMonthlyIncome + " - " + validSalaryRequest
-                }
-              />
-            </div>
-          )}
-          <p>
-            <span className="boldLabel">Occupation:</span> {card.occupation}
-          </p>
-          <p>
-            <span className="boldLabel">Average monthly income:</span>{" "}
-            {card.averageMonthlyIncome}
-          </p>
-          <p>
-            <span className="boldLabel">Blocked:</span> {cardBlockedStatus}
-          </p>
+          <div className="formSection">
+            <p>
+              <span className="boldLabel">Amount requested: </span>{" "}
+            </p>
+            <input
+              type="number"
+              className="input"
+              name="amountRequested"
+              placeholder={
+                card.averageMonthlyIncome + " - " + validSalaryRequest
+              }
+              value={userSalaryRequest}
+              onChange={(e) => setUserSalaryRequest(e.target.value)}
+            />
+          </div>
+
+          <div className="formSection">
+            <p>
+              <span className="boldLabel">Occupation:</span>
+            </p>
+            <input
+              type="text"
+              placeholder="שיכר\עצמאי\אחר"
+              className="input"
+              value={userOccupation}
+              onChange={(e) => setUserOccupation(e.target.value)}
+            />
+          </div>
+
+          <div className="formSection">
+            <p>
+              <span className="boldLabel">Average monthly income:</span>
+            </p>
+            <input
+              type="number"
+              className="input"
+              value={userAverageMonthlyIncome}
+              onChange={(e) => setUserAverageMonthlyIncome(e.target.value)}
+            />
+          </div>
         </div>
         {validRequestAnIncrease && (
           <button

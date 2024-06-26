@@ -34,7 +34,6 @@ namespace backend.Services
             var card = cards.FirstOrDefault(c => c.CardNumber == cardNumber);
             if (card == null || card.IsBlocked || card.IssuanceDate > DateTime.Now.AddMonths(-3) || card.AverageMonthlyIncome < 12000)
             {
-                Console.WriteLine("here");
                 return false;
             }
 

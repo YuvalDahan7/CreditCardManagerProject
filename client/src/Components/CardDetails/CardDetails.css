@@ -26,19 +26,20 @@
     font-weight: bold;
 }
 
-.salaryIncrease {
+.formSection {
   display: flex;
   align-items: center;
   
   p {
     width: 100%;
-    margin: 0;
+    /* margin: 0; */
   }
   .input {
     height: 5px;
-    width: 60%;
+    width: 50%;
     transform: translate(-20%, -10%);
     font-size: 14px;
+    
   }
 }
 
