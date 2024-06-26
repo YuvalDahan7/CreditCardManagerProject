@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./CardDetails.css";
+import { increaseCreditLimit } from "../../apiService";
 
-function CardDetails({ card, onClose }) {
+function CardDetails({ card, onClose, onCardListUpdate }) {
   const [cardBlockedStatus, setCardBlockedStatus] = useState("");
   const [validRequestAnIncrease, setValidRequestAnIncrease] = useState(false);
   const [validSalaryRequest, setValidSalaryRequest] = useState("");
+  const [updatedCardList, setUpdatedCardList] = useState([]);
+
+  const handleIncreaseCreditLimit = () => {
+    increaseCreditLimit(card.cardNumber)
+      .then((updatedCards) => {
+        onCardListUpdate(updatedCards);
+        console.log("Card list updated successfully.");
+      })
+      .catch((err) => {
+        console.log("Unable to update card list:", err);
+      });
+  };
 
   useEffect(() => {
     if (card.isBlocked || card.occupation === "אחר") {
@@ -43,20 +56,37 @@ function CardDetails({ card, onClose }) {
         <div className="cardContent">
           {validRequestAnIncrease && (
             <div className="salaryIncrease">
-              <p><span className="boldLabel">Amount requested: </span> </p>
+              <p>
+                <span className="boldLabel">Amount requested: </span>{" "}
+              </p>
               <input
                 type="text"
                 className="input"
-                placeholder={card.averageMonthlyIncome + " - " + validSalaryRequest}
+                name="amountRequested"
+                placeholder={
+                  card.averageMonthlyIncome + " - " + validSalaryRequest
+                }
               />
             </div>
           )}
-          <p><span className="boldLabel">Occupation:</span> {card.occupation}</p>
-          <p><span className="boldLabel">Average monthly income:</span> {card.averageMonthlyIncome}</p>
-          <p><span className="boldLabel">Blocked:</span> {cardBlockedStatus}</p>
+          <p>
+            <span className="boldLabel">Occupation:</span> {card.occupation}
+          </p>
+          <p>
+            <span className="boldLabel">Average monthly income:</span>{" "}
+            {card.averageMonthlyIncome}
+          </p>
+          <p>
+            <span className="boldLabel">Blocked:</span> {cardBlockedStatus}
+          </p>
         </div>
         {validRequestAnIncrease && (
-          <button className="increaseButton">Increase Credit Limit</button>
+          <button
+            className="increaseButton"
+            onClick={handleIncreaseCreditLimit}
+          >
+            Increase Credit Limit
+          </button>
         )}
       </div>
     </>

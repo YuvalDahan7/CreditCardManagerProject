@@ -33,12 +33,14 @@ function DisplayCardList({
       });
   }, [filter]);
 
+  const handleCardListUpdate = (updatedCards) => {
+    setCards(updatedCards);
+  };
+
   return (
     <div className={"cardsContainer"}>
       <div className="getBanksButton">
-        <button onClick={handleBanksDetails}>
-          Get all banks
-        </button>
+        <button onClick={handleBanksDetails}>Get all banks</button>
       </div>
       <ul className="cardList">
         {cards.map((card) => (
@@ -55,7 +57,11 @@ function DisplayCardList({
           </div>
         ))}
         {selectedCard && (
-          <CardDetails card={selectedCard} onClose={handleClose} />
+          <CardDetails
+            card={selectedCard}
+            onClose={handleClose}
+            onCardListUpdate={handleCardListUpdate}
+          />
         )}
         {showBanksDetails && <DisplayBankList onClose={handleClose} />}
       </ul>

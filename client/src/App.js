@@ -3,6 +3,7 @@ import "./App.css";
 import DisplayCardList from "./Components/DisplayCardsList/DisplayCardList";
 import Login from "./Components/Login/Login";
 import FilterCards from "./Components/FilterCards/FilterCards";
+import { login } from "./apiService";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -12,14 +13,17 @@ function App() {
     setShowBanksDetails(banks);
   };
 
-  const handleLogin = (userName, password) => {
-    if (userName === "1" && password === "1") {
+  const handleLogin = async (userName, password) => {
+    try {
+      const accessToken = await login(userName, password);
+      console.log(accessToken);
       setIsLoggedIn(true);
-      return true;
+    } catch (err) {
+      alert("User name or password is incorrect!")
+      console.error(err);
     }
-    console.log("err");
-    return false;
   };
+
   return (
     <div className={"App"}>
       <>
@@ -27,7 +31,11 @@ function App() {
         {isLoggedIn ? (
           <>
             <FilterCards />
-            <DisplayCardList showBanksDetails={showBanksDetails} handleBanksDetails={handleBanksDetails} setShowBanksDetails={setShowBanksDetails} />
+            <DisplayCardList
+              showBanksDetails={showBanksDetails}
+              handleBanksDetails={handleBanksDetails}
+              setShowBanksDetails={setShowBanksDetails}
+            />
           </>
         ) : (
           <Login onLogin={handleLogin} />

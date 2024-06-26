@@ -46,7 +46,6 @@ namespace backend
             return new Claim[]
             {
                 new Claim(ClaimTypes.Name, loginRequest.Username!),
-                new Claim(ClaimTypes.NameIdentifier, loginRequest.Id)
             };
         }
     }
