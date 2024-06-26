@@ -8,6 +8,7 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
   const [userSalaryRequest, setUserSalaryRequest] = useState("");
   const [userOccupation, setUserOccupation] = useState("");
   const [userAverageMonthlyIncome, setUserAverageMonthlyIncome] = useState("");
+  const [displaySuccessMsg, setDisplaySuccessMsg] = useState(false);
 
   useEffect(() => {
     validateInputs();
@@ -63,6 +64,7 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
       .then((updatedCards) => {
         onCardListUpdate(updatedCards);
         console.log("Card list updated successfully.");
+        setDisplaySuccessMsg(true);
       })
       .catch((err) => {
         console.log("Unable to update card list:", err);
@@ -74,53 +76,63 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
       <div className="overlay" onClick={onClose}></div>
       <div className="detailsContainer">
         <h1>Card Details</h1>
-        <div className="cardContent">
-          <div className="formSection">
-            <p>
-              <span className="boldLabel">Amount requested: </span>{" "}
-            </p>
-            <input
-              type="number"
-              className="input"
-              name="amountRequested"
-              placeholder={validSalaryRequest}
-              value={userSalaryRequest}
-              onChange={(e) => setUserSalaryRequest(e.target.value)}
-            />
-          </div>
 
-          <div className="formSection">
+        {displaySuccessMsg ? (
+          <div className="successMsg">
             <p>
-              <span className="boldLabel">Occupation:</span>
+              <span>Your request passed successfully!</span>
+              <br />
+              <br /> Press any place to close this window.
             </p>
-            <input
-              type="text"
-              placeholder="שיכר\עצמאי\אחר"
-              className="input"
-              value={userOccupation}
-              onChange={(e) => setUserOccupation(e.target.value)}
-            />
           </div>
+        ) : (
+          <div className="cardContent">
+            <div className="formSection">
+              <p>
+                <span className="boldLabel">Amount requested: </span>{" "}
+              </p>
+              <input
+                type="number"
+                className="input"
+                name="amountRequested"
+                onChange={(e) => setUserSalaryRequest(e.target.value)}
+              />
+            </div>
 
-          <div className="formSection">
-            <p>
-              <span className="boldLabel">Average monthly income:</span>
-            </p>
-            <input
-              type="number"
-              className="input"
-              value={userAverageMonthlyIncome}
-              onChange={(e) => setUserAverageMonthlyIncome(e.target.value)}
-            />
+            <div className="formSection">
+              <p>
+                <span className="boldLabel">Occupation:</span>
+              </p>
+              <input
+                type="text"
+                placeholder="שכיר\עצמאי\אחר"
+                className="input"
+                value={userOccupation}
+                onChange={(e) => setUserOccupation(e.target.value)}
+              />
+            </div>
+
+            <div className="formSection">
+              <p>
+                <span className="boldLabel">Average monthly income:</span>
+              </p>
+              <input
+                type="number"
+                className="input"
+                value={userAverageMonthlyIncome}
+                onChange={(e) => setUserAverageMonthlyIncome(e.target.value)}
+              />
+            </div>
+
+            {validRequestAnIncrease && (
+              <button
+                className="increaseButton"
+                onClick={handleIncreaseCreditLimit}
+              >
+                Increase Credit Limit
+              </button>
+            )}
           </div>
-        </div>
-        {validRequestAnIncrease && (
-          <button
-            className="increaseButton"
-            onClick={handleIncreaseCreditLimit}
-          >
-            Increase Credit Limit
-          </button>
         )}
       </div>
     </>

@@ -14,6 +14,7 @@
   max-width: 90%;
   h1 {
     text-align: center;
+    font-size: 25px;
   }
 }
 
@@ -23,23 +24,21 @@
 }
 
 .boldLabel {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .formSection {
   display: flex;
   align-items: center;
-  
+
   p {
     width: 100%;
-    /* margin: 0; */
   }
   .input {
     height: 5px;
     width: 50%;
     transform: translate(-20%, -10%);
     font-size: 14px;
-    
   }
 }
 
@@ -81,4 +80,15 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+}
+
+.successMsg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  span {
+    font-weight: bold;
+    color: green;
+  }
 }

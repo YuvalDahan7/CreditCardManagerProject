@@ -8,7 +8,7 @@ namespace backend.Services
     public class CardService : ICardService
     {
         static List<Card> cards = mockData.Cards;
-        public List<Card> GetCards(bool? isBlocked=null, string? cardNumber=null, string? bankName=null)
+        public List<Card> GetCards(bool? isBlocked = null, string? cardNumber = null, string? bankName = null)
         {
 
             if (isBlocked.HasValue)
@@ -46,7 +46,7 @@ namespace backend.Services
 
             if (requestedLimit <= 100000 && requestedLimit <= maxLimit)
             {
-                card.CreditLimit = requestedLimit;
+                card.CreditLimit = card.CreditLimit + requestedLimit;
                 return true;
             }
 
