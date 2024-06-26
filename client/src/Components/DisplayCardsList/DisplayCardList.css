@@ -4,10 +4,20 @@
   margin: 0 auto;
   font-family: Arial, sans-serif;
 }
+.topSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
 
 .getBanksButton {
-  display: flex;
-  justify-content: end;
+  position: relative;
+  top: 110px;
+}
+
+.filterCards {
+  width: 30%;
 }
 
 .boldLabel {

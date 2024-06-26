@@ -19,7 +19,7 @@ function App() {
       console.log(accessToken);
       setIsLoggedIn(true);
     } catch (err) {
-      alert("User name or password is incorrect!")
+      alert("User name or password is incorrect!");
       console.error(err);
     }
   };
@@ -30,7 +30,6 @@ function App() {
         <h1>Credit Card Manager</h1>
         {isLoggedIn ? (
           <>
-            <FilterCards />
             <DisplayCardList
               showBanksDetails={showBanksDetails}
               handleBanksDetails={handleBanksDetails}

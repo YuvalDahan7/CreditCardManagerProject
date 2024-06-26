@@ -3,6 +3,7 @@ import { getCards } from "../../apiService";
 import "./DisplayCardList.css";
 import CardDetails from "../CardDetails/CardDetails";
 import DisplayBankList from "../BanksList/DisplayBankList";
+import FilterCards from "../FilterCards/FilterCards"; // Import FilterCards component
 
 function DisplayCardList({
   showBanksDetails,
@@ -33,22 +34,39 @@ function DisplayCardList({
       });
   };
 
-  useEffect(refreshCards, [filter]);
-
   const handleCardListUpdate = (updatedCards) => {
     console.log(updatedCards);
     refreshCards();
   };
 
+  const handleFilter = (newFilter) => {
+    setFilter(newFilter);
+  };
+
+  useEffect(() => {
+    refreshCards();
+  }, [filter]);
+
   return (
     <div className={"cardsContainer"}>
-      <div className="getBanksButton">
-        <button onClick={handleBanksDetails}>Get all banks</button>
+      <div className="topSection">
+        <div className="getBanksButton">
+          <button onClick={handleBanksDetails}>Get all banks</button>
+        </div>
+
+        <div className="filterCards">
+          <FilterCards onFilter={handleFilter} />
+        </div>
       </div>
+
       <ul className="cardList">
         {cards.map((card) => (
-          <div className="card" onClick={() => handleCardDetails(card)}>
-            <li key={card.cardNumber}>
+          <div
+            className="card"
+            onClick={() => handleCardDetails(card)}
+            key={card.cardNumber}
+          >
+            <li>
               <img src={card.cardImage} alt="" className="cardImage" />
               <div className="cardContent">
                 <div className="cardNumber">Card number: {card.cardNumber}</div>
