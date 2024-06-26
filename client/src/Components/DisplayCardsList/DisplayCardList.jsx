@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getCards } from "../../apiService";
 import "./DisplayCardList.css";
 import CardDetails from "../CardDetails/CardDetails";
+import DisplayBankList from "../BanksList/DisplayBankList";
 
-function DisplayCardList() {
+function DisplayCardList({showBanksDetails, handleBanksDetails}) {
   const [cards, setCards] = useState([]);
   const [filter, setFilter] = useState({});
   const [selectedCard, setSelectedCard] = useState(null);
@@ -28,7 +29,10 @@ function DisplayCardList() {
   }, [filter]);
 
   return (
-    <div className="cardsContainer">
+    <div className={"cardsContainer"}>
+      <button className="getBanksButton" onClick={handleBanksDetails}>
+        See all banks
+      </button>
       <ul className="cardList">
         {cards.map((card) => (
           <div className="card" onClick={() => handleCardDetails(card)}>
@@ -46,6 +50,7 @@ function DisplayCardList() {
         {selectedCard && (
           <CardDetails card={selectedCard} onClose={handleClose} />
         )}
+        {showBanksDetails && <DisplayBankList />}
       </ul>
     </div>
   );

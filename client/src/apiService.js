@@ -4,7 +4,16 @@ const api = axios.create({
   baseURL: "http://localhost:5050/",
 });
 
-export const getBanks = () => api.get("Bank/GetBanks");
+export const getBanks = () =>
+  api
+    .get("/api/Bank/GetBanks")
+    .then((res) => {
+      console.log(res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      throw err;
+    });
 
 export const getCards = (filter) =>
   api

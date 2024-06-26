@@ -1,0 +1,40 @@
+.banksContainer {
+  position: fixed;
+  top: 10%;
+  left: 0;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.bankList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.bank {
+  display: flex;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.bankContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bankCode,
+.bankNumber,
+.bankDescription {
+  margin: 4px 0;
+}
+
+.boldLabel {
+  font-weight: bold;
+}
