@@ -23,7 +23,7 @@ function DisplayCardList({
     setSelectedCard(null);
   };
 
-  useEffect(() => {
+  const refreshCards = () => {
     getCards(filter)
       .then((data) => {
         setCards(data);
@@ -31,10 +31,13 @@ function DisplayCardList({
       .catch((err) => {
         console.log("Error fetching cards:", err);
       });
-  }, [filter]);
+  };
+
+  useEffect(refreshCards, [filter]);
 
   const handleCardListUpdate = (updatedCards) => {
-    setCards(updatedCards);
+    console.log(updatedCards);
+    refreshCards();
   };
 
   return (

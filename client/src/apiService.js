@@ -26,18 +26,21 @@ export const getCards = (filter) =>
       throw err;
     });
 
-export const increaseCreditLimit = (data) =>
-  api
+export const increaseCreditLimit = async (data) => {
+  let res = await api
     .post("api/Card/IncreaseCreditLimit", {
       CardNumber: data.cardNumber,
       RequestedLimit: data.requestedLimit,
       Occupation: data.occupation,
       AverageMonthlyIncome: data.averageMonthlyIncome,
     })
-    .then((res) => res.data)
     .catch((err) => {
       console.log(err);
     });
+
+  console.log(res.data);
+  return res.data;
+};
 
 export const login = async (username, password) => {
   try {
@@ -46,9 +49,9 @@ export const login = async (username, password) => {
       Password: password,
     });
     console.log("Logged in!");
-    return response.data; 
+    return response.data;
   } catch (err) {
     console.error(err);
-    throw err; 
+    throw err;
   }
 };
