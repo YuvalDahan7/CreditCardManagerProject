@@ -13,11 +13,16 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
     validateInputs();
   }, [userSalaryRequest, userOccupation, userAverageMonthlyIncome]);
 
-  const validateInputs = () => {
+  const validateInputs = (card) => {
+    if (!card) {
+      return;
+    
+    }
     setValidRequestAnIncrease(false);
     setValidSalaryRequest("");
 
     if (
+      card.isBlocked ||
       !userSalaryRequest ||
       userSalaryRequest <= 0 ||
       !userOccupation ||
