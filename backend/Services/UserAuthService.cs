@@ -16,7 +16,7 @@ namespace backend.Services
 
         public string Authenticate(LoginRequest request)
         {
-            if (request.Username != "1" || request.Password != "1")
+            if (request.Username != "Isracard" || request.Password != "Isracard")
             {
                 return null;
             }
