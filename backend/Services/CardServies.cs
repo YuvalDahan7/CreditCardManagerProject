@@ -1,7 +1,6 @@
 using backend.Models;
 using backend.data;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
+
 
 namespace backend.Services
 {

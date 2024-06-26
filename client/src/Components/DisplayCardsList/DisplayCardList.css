@@ -11,13 +11,8 @@
   flex-direction: row-reverse;
 }
 
-.getBanksButton {
-  position: relative;
-  top: 110px;
-}
-
 .filterCards {
-  width: 30%;
+  width: 50%;
 }
 
 .boldLabel {

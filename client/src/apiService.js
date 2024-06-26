@@ -8,7 +8,6 @@ export const getBanks = () =>
   api
     .get("/api/Bank/GetBanks")
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((err) => {
@@ -19,7 +18,6 @@ export const getCards = (filter) =>
   api
     .get("/api/Card/GetCards", { params: filter })
     .then((res) => {
-      console.log(res.data);
       return res.data;
     })
     .catch((err) => {
@@ -48,7 +46,6 @@ export const login = async (username, password) => {
       Username: username,
       Password: password,
     });
-    console.log("Logged in!");
     return response.data;
   } catch (err) {
     console.error(err);

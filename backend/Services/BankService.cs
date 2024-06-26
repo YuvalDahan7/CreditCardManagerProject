@@ -2,7 +2,6 @@
 using backend.Models;
 using backend.data;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
 
 namespace backend.Services
 {
@@ -21,10 +20,10 @@ namespace backend.Services
         {
 
             const string cacheKey = "Banks";
-            if (!_cache.TryGetValue(cacheKey, out List<Bank> banks)) //check if there are any banks on the cache.
+            if (!_cache.TryGetValue(cacheKey, out List<Bank> banks))
             {
-                banks = mockData.Banks; //getting the cache from the mockData.
-                var cacheEntryOptions = new MemoryCacheEntryOptions //set the time expiration for the cache.
+                banks = mockData.Banks;
+                var cacheEntryOptions = new MemoryCacheEntryOptions
                 {
                     AbsoluteExpirationRelativeToNow = _cacheExpiration
                 };

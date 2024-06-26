@@ -15,7 +15,6 @@ function DisplayCardList({
   const [selectedCard, setSelectedCard] = useState(null);
 
   const handleCardDetails = (card) => {
-    console.log("card: ", card, "clicked!");
     setSelectedCard(card);
   };
 
@@ -35,7 +34,6 @@ function DisplayCardList({
   };
 
   const handleCardListUpdate = (updatedCards) => {
-    console.log(updatedCards);
     refreshCards();
   };
 

@@ -51,7 +51,6 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
   const handleIncreaseCreditLimit = () => {
     const requestedLimit = parseFloat(userSalaryRequest);
     if (!requestedLimit || isNaN(requestedLimit)) {
-      console.error("Invalid requested amount.");
       return;
     }
 
@@ -63,7 +62,6 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
     })
       .then((updatedCards) => {
         onCardListUpdate(updatedCards);
-        console.log("Card list updated successfully.");
         setDisplaySuccessMsg(true);
       })
       .catch((err) => {
