@@ -5,6 +5,11 @@
   font-family: Arial, sans-serif;
 }
 
+.getBanksButton {
+  display: flex;
+  justify-content: end;
+}
+
 .boldLabel {
   font-weight: bold;
 }

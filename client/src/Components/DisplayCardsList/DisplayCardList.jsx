@@ -4,7 +4,11 @@ import "./DisplayCardList.css";
 import CardDetails from "../CardDetails/CardDetails";
 import DisplayBankList from "../BanksList/DisplayBankList";
 
-function DisplayCardList({showBanksDetails, handleBanksDetails}) {
+function DisplayCardList({
+  showBanksDetails,
+  handleBanksDetails,
+  setShowBanksDetails,
+}) {
   const [cards, setCards] = useState([]);
   const [filter, setFilter] = useState({});
   const [selectedCard, setSelectedCard] = useState(null);
@@ -15,6 +19,7 @@ function DisplayCardList({showBanksDetails, handleBanksDetails}) {
   };
 
   const handleClose = () => {
+    setShowBanksDetails(null);
     setSelectedCard(null);
   };
 
@@ -30,9 +35,11 @@ function DisplayCardList({showBanksDetails, handleBanksDetails}) {
 
   return (
     <div className={"cardsContainer"}>
-      <button className="getBanksButton" onClick={handleBanksDetails}>
-        See all banks
-      </button>
+      <div className="getBanksButton">
+        <button onClick={handleBanksDetails}>
+          Get all banks
+        </button>
+      </div>
       <ul className="cardList">
         {cards.map((card) => (
           <div className="card" onClick={() => handleCardDetails(card)}>
@@ -50,7 +57,7 @@ function DisplayCardList({showBanksDetails, handleBanksDetails}) {
         {selectedCard && (
           <CardDetails card={selectedCard} onClose={handleClose} />
         )}
-        {showBanksDetails && <DisplayBankList />}
+        {showBanksDetails && <DisplayBankList onClose={handleClose} />}
       </ul>
     </div>
   );

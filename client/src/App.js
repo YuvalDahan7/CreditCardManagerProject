@@ -3,14 +3,13 @@ import "./App.css";
 import DisplayCardList from "./Components/DisplayCardsList/DisplayCardList";
 import Login from "./Components/Login/Login";
 import FilterCards from "./Components/FilterCards/FilterCards";
-import DisplayBankList from "./Components/BanksList/DisplayBankList";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
-  const [showBanksDetails, setShowBanksDetails] = useState(false);
+  const [showBanksDetails, setShowBanksDetails] = useState(null);
 
-  const handleBanksDetails = () => {
-    setShowBanksDetails(!showBanksDetails);
+  const handleBanksDetails = (banks) => {
+    setShowBanksDetails(banks);
   };
 
   const handleLogin = (userName, password) => {
@@ -22,13 +21,13 @@ function App() {
     return false;
   };
   return (
-    <div className={showBanksDetails ? "rearDarkness" : "App"}>
+    <div className={"App"}>
       <>
         <h1>Credit Card Manager</h1>
         {isLoggedIn ? (
           <>
             <FilterCards />
-            <DisplayCardList showBanksDetails={showBanksDetails} handleBanksDetails={handleBanksDetails} />
+            <DisplayCardList showBanksDetails={showBanksDetails} handleBanksDetails={handleBanksDetails} setShowBanksDetails={setShowBanksDetails} />
           </>
         ) : (
           <Login onLogin={handleLogin} />

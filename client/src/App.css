@@ -21,14 +21,14 @@ body {
   font-size: 40px;
 }
 
-.rearDarkness {
+/* .rearDarkness {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-}
+} */
 
 a {
   color: #004990; /* Link color */

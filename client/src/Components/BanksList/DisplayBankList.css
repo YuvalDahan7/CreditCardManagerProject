@@ -1,12 +1,12 @@
 .banksContainer {
   position: fixed;
-  top: 10%;
-  left: 0;
+  top: 15%;
+  left: 3.5%;
   background-color: #f9f9f9;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
+  border-radius: 10px;
+  z-index: 999;
+  width: 90%;
 }
 
 .bankList {
@@ -38,3 +38,4 @@
 .boldLabel {
   font-weight: bold;
 }
+
