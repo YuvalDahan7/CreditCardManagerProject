@@ -39,6 +39,7 @@ function DisplayCardList({
 
   const handleFilter = (newFilter) => {
     setFilter(newFilter);
+    console.log(newFilter);
   };
 
   useEffect(() => {
@@ -58,23 +59,29 @@ function DisplayCardList({
       </div>
 
       <ul className="cardList">
-        {cards.map((card) => (
-          <div
-            className="card"
-            onClick={() => handleCardDetails(card)}
-            key={card.cardNumber}
-          >
-            <li>
-              <img src={card.cardImage} alt="" className="cardImage" />
-              <div className="cardContent">
-                <div className="cardNumber">Card number: {card.cardNumber}</div>
-                <div className="bankName">
-                  <span className="boldLabel">Bank:</span> {card.bankName}
+        {cards
+          .filter((card) => {
+            return filter === "" ? card : card.cardNumber.includes(filter);
+          })
+          .map((card) => (
+            <div
+              className="card"
+              onClick={() => handleCardDetails(card)}
+              key={card.cardNumber}
+            >
+              <li>
+                <img src={card.cardImage} alt="" className="cardImage" />
+                <div className="cardContent">
+                  <div className="cardNumber">
+                    Card number: {card.cardNumber}
+                  </div>
+                  <div className="bankName">
+                    <span className="boldLabel">Bank:</span> {card.bankName}
+                  </div>
                 </div>
-              </div>
-            </li>
-          </div>
-        ))}
+              </li>
+            </div>
+          ))}
         {selectedCard && (
           <CardDetails
             card={selectedCard}
