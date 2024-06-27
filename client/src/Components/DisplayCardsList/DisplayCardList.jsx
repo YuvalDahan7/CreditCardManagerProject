@@ -11,7 +11,7 @@ function DisplayCardList({
   setShowBanksDetails,
 }) {
   const [cards, setCards] = useState([]);
-  const [filter, setFilter] = useState({});
+  const [filter, setFilter] = useState("");
   const [selectedCard, setSelectedCard] = useState(null);
 
   const handleCardDetails = (card) => {
@@ -44,6 +44,7 @@ function DisplayCardList({
 
   useEffect(() => {
     refreshCards();
+    console.log(filter)
   }, [filter]);
 
   return (
