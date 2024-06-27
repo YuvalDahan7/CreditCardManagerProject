@@ -13,33 +13,33 @@ function FilterCards({ onFilter }) {
       cardNumber,
       bankCode: bankCode !== "All" ? bankCode : undefined,
     };
-    onFilter(filter);
   };
-
+  
   const handleCreditCardNumberChange = (e) => {
     const inputCardNumber = e.target.value.replace(/\s/g, "");
     let formattedInput = inputCardNumber.replace(/\D/g, ""); 
-
+    
     if (formattedInput.length > 4) {
       formattedInput = formattedInput.replace(/(.{4})/g, "$1 ");
     }
-
+    
     setFormattedCardNumber(formattedInput.trim()); 
     setBankCode(formattedInput.trim()); 
     setCardNumber(e.target.value); 
+    onFilter(e.target.value);
   };
 
   return (
     <div className="filterContainer">
       <h1>Search for a card</h1>
-      <div className="cardBlockSection">
+      {/* <div className="cardBlockSection">
         <p>Blocked ?</p>
         <select value={blocked} onChange={(e) => setBlocked(e.target.value)}>
           <option value=""> </option>
           <option value="false">False</option>
           <option value="true">True</option>
         </select>
-      </div>
+      </div> */}
       <div className="cardNumberSection">
         <p>Card number: </p>
         <input
@@ -48,7 +48,7 @@ function FilterCards({ onFilter }) {
           onChange={handleCreditCardNumberChange} 
         />
       </div>
-      <div className="bankNumberSection">
+      {/* <div className="bankNumberSection">
         <p>Bank code: </p>
         <select value={bankCode} onChange={(e) => setBankCode(e.target.value)}>
           <option value="All">All</option>
@@ -57,11 +57,8 @@ function FilterCards({ onFilter }) {
           <option value="003">003</option>
           <option value="004">004</option>
         </select>
-      </div>
-
-      <button className="filterButton" onClick={handleSearchClick}>
-        Search
-      </button>
+      </div> */}
+      
     </div>
   );
 }
