@@ -92,3 +92,14 @@
     color: green;
   }
 }
+
+.errMsg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  span {
+    font-weight: bold;
+    color: red;
+  }
+}

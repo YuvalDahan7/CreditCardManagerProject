@@ -7,23 +7,30 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
   const [validSalaryRequest, setValidSalaryRequest] = useState("");
   const [userSalaryRequest, setUserSalaryRequest] = useState("");
   const [userOccupation, setUserOccupation] = useState("");
+  const [userCardStatus, setUserCardStatus] = useState("");
   const [userAverageMonthlyIncome, setUserAverageMonthlyIncome] = useState("");
   const [displaySuccessMsg, setDisplaySuccessMsg] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(false);
 
   useEffect(() => {
     validateInputs();
-  }, [userSalaryRequest, userOccupation, userAverageMonthlyIncome]);
+  }, [
+    userSalaryRequest,
+    userOccupation,
+    userAverageMonthlyIncome,
+    userCardStatus,
+  ]);
 
   const validateInputs = () => {
     setValidRequestAnIncrease(false);
     setValidSalaryRequest("");
 
     if (
-      card.isBlocked ||
       !userSalaryRequest ||
       userSalaryRequest <= 0 ||
       !userOccupation ||
-      !userAverageMonthlyIncome
+      !userAverageMonthlyIncome ||
+      userCardStatus != "לא חסום"
     ) {
       return;
     }
@@ -50,7 +57,12 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
 
   const handleIncreaseCreditLimit = () => {
     const requestedLimit = parseFloat(userSalaryRequest);
-    if (!requestedLimit || isNaN(requestedLimit)) {
+    if (
+      !requestedLimit ||
+      isNaN(requestedLimit) ||
+      userCardStatus != "לא חסום"
+    ) {
+      setErrorMsg(true);
       return;
     }
 
@@ -122,13 +134,33 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
               />
             </div>
 
-            {validRequestAnIncrease && (
-              <button
-                className="increaseButton"
-                onClick={handleIncreaseCreditLimit}
-              >
-                Increase Credit Limit
-              </button>
+            <div className="formSection">
+              <p>
+                <span className="boldLabel"> Blocked ? </span>
+              </p>
+              <input
+                type="text"
+                className="input"
+                value={userCardStatus}
+                placeholder="חסום\לא חסום"
+                onChange={(e) => setUserCardStatus(e.target.value)}
+              />
+            </div>
+
+            <button
+              className="increaseButton"
+              onClick={handleIncreaseCreditLimit}
+            >
+              Increase Credit Limit
+            </button>
+            {errorMsg && (
+              <div className="errMsg">
+                <p>
+                  <span>Invalid params for increase your credit card.</span>
+                  <br />
+                  <br /> Press any place to close this window.
+                </p>
+              </div>
             )}
           </div>
         )}

@@ -11,7 +11,7 @@ function DisplayCardList({
   setShowBanksDetails,
 }) {
   const [cards, setCards] = useState([]);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState({ blocked: "", cardNumber: "", bankCode: "" });
   const [selectedCard, setSelectedCard] = useState(null);
 
   const handleCardDetails = (card) => {
@@ -27,6 +27,7 @@ function DisplayCardList({
     getCards(filter)
       .then((data) => {
         setCards(data);
+        console.log(data)
       })
       .catch((err) => {
         console.log("Error fetching cards:", err);
@@ -39,12 +40,10 @@ function DisplayCardList({
 
   const handleFilter = (newFilter) => {
     setFilter(newFilter);
-    console.log(newFilter);
   };
 
   useEffect(() => {
     refreshCards();
-    console.log(filter)
   }, [filter]);
 
   return (
@@ -62,7 +61,11 @@ function DisplayCardList({
       <ul className="cardList">
         {cards
           .filter((card) => {
-            return filter === "" ? card : card.cardNumber.includes(filter);
+            return (
+              (filter.blocked === "" ? card : card.isBlocked === filter.blocked) &&
+              (filter.cardNumber === "" || card.cardNumber.includes(filter.cardNumber)) &&
+              (filter.bankCode === "" || filter.bankCode === "All" || card.bankCode === filter.bankCode)
+            );
           })
           .map((card) => (
             <div
