@@ -60,7 +60,8 @@ function CardDetails({ card, onClose, onCardListUpdate }) {
     if (
       !requestedLimit ||
       isNaN(requestedLimit) ||
-      userCardStatus != "לא חסום"
+      userCardStatus != "לא חסום" ||
+      card.isBlocked
     ) {
       setErrorMsg(true);
       return;
