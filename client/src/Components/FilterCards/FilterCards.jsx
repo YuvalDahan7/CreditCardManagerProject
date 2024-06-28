@@ -4,8 +4,8 @@ import "./FilterCards.css";
 function FilterCards({ onFilter }) {
   const [filters, setFilters] = useState({
     cardNumber: '',
-    isBlocked: '',
-    bankCode: '',
+    isBlocked: 'All',
+    bankCode: 'All',
   });
 
   const handleFilterChange = (e) => {
@@ -18,7 +18,7 @@ function FilterCards({ onFilter }) {
 
   useEffect(() => {
     onFilter(filters);
-  }, [filters, onFilter]);
+  }, [filters]);
 
   return (
     <div className="filterContainer">
@@ -30,7 +30,7 @@ function FilterCards({ onFilter }) {
           value={filters.isBlocked}
           onChange={handleFilterChange}
         >
-          <option value=""> </option>
+          <option value="All">All</option>
           <option value="false">False</option>
           <option value="true">True</option>
         </select>

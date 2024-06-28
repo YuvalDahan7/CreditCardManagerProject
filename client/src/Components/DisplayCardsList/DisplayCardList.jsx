@@ -16,7 +16,7 @@ function DisplayCardList({
 
   const handleCardDetails = (card) => {
     setSelectedCard(card);
-    console.log(cards);
+    console.log(card);
   };
 
   const handleClose = () => {
@@ -28,7 +28,8 @@ function DisplayCardList({
     getCards()
       .then((data) => {
         setCards(data);
-        setFilteredCards(data); // Initialize filteredCards with all cards
+        console.log(data);
+        setFilteredCards(data);
       })
       .catch((err) => {
         console.log("Error fetching cards:", err);
@@ -44,9 +45,10 @@ function DisplayCardList({
       return (
         (filters.cardNumber === "" ||
           card.cardNumber.includes(filters.cardNumber)) &&
-        (filters.isBlocked === "" ||
-         String(card.isBlocked) === filters.isBlocked) &&
-        (filters.bankCode === "All" || card.bankCode === filters.bankCode)
+        (filters.isBlocked === "All" ||
+          String(card.isBlocked) === filters.isBlocked) &&
+        (filters.bankCode === "All" ||
+          String(card.bankCode) === filters.bankCode)
       );
     });
     setFilteredCards(filtered);
@@ -78,9 +80,7 @@ function DisplayCardList({
             <li>
               <img src={card.cardImage} alt="" className="cardImage" />
               <div className="cardContent">
-                <div className="cardNumber">
-                  Card number: {card.cardNumber}
-                </div>
+                <div className="cardNumber">Card number: {card.cardNumber}</div>
                 <div className="bankName">
                   <span className="boldLabel">Bank:</span> {card.bankName}
                 </div>

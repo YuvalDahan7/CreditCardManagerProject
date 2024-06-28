@@ -9,6 +9,7 @@ namespace backend.Models
         public bool IsDigital { get; set; }
         public decimal CreditLimit { get; set; }
         public string BankCode { get; set; }
+        public string BankName { get; set; }
         public string Occupation { get; set; }
         public decimal AverageMonthlyIncome { get; set; }
     }
