@@ -11,11 +11,12 @@ function DisplayCardList({
   setShowBanksDetails,
 }) {
   const [cards, setCards] = useState([]);
-  const [filter, setFilter] = useState({ blocked: "", cardNumber: "", bankCode: "" });
+  const [filteredCards, setFilteredCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
 
   const handleCardDetails = (card) => {
     setSelectedCard(card);
+    console.log(card);
   };
 
   const handleClose = () => {
@@ -24,10 +25,11 @@ function DisplayCardList({
   };
 
   const refreshCards = () => {
-    getCards(filter)
+    getCards()
       .then((data) => {
         setCards(data);
-        console.log(data)
+        console.log(data);
+        setFilteredCards(data);
       })
       .catch((err) => {
         console.log("Error fetching cards:", err);
@@ -38,13 +40,23 @@ function DisplayCardList({
     refreshCards();
   };
 
-  const handleFilter = (newFilter) => {
-    setFilter(newFilter);
+  const handleFilter = (filters) => {
+    const filtered = cards.filter((card) => {
+      return (
+        (filters.cardNumber === "" ||
+          card.cardNumber.includes(filters.cardNumber)) &&
+        (filters.isBlocked === "All" ||
+          String(card.isBlocked) === filters.isBlocked) &&
+        (filters.bankCode === "All" ||
+          String(card.bankCode) === filters.bankCode)
+      );
+    });
+    setFilteredCards(filtered);
   };
 
   useEffect(() => {
     refreshCards();
-  }, [filter]);
+  }, []);
 
   return (
     <div className={"cardsContainer"}>
@@ -59,33 +71,23 @@ function DisplayCardList({
       </div>
 
       <ul className="cardList">
-        {cards
-          .filter((card) => {
-            return (
-              (filter.blocked === "" ? card : card.isBlocked === filter.blocked) &&
-              (filter.cardNumber === "" || card.cardNumber.includes(filter.cardNumber)) &&
-              (filter.bankCode === "" || filter.bankCode === "All" || card.bankCode === filter.bankCode)
-            );
-          })
-          .map((card) => (
-            <div
-              className="card"
-              onClick={() => handleCardDetails(card)}
-              key={card.cardNumber}
-            >
-              <li>
-                <img src={card.cardImage} alt="" className="cardImage" />
-                <div className="cardContent">
-                  <div className="cardNumber">
-                    Card number: {card.cardNumber}
-                  </div>
-                  <div className="bankName">
-                    <span className="boldLabel">Bank:</span> {card.bankName}
-                  </div>
+        {filteredCards.map((card) => (
+          <div
+            className="card"
+            onClick={() => handleCardDetails(card)}
+            key={card.cardNumber}
+          >
+            <li>
+              <img src={card.cardImage} alt="" className="cardImage" />
+              <div className="cardContent">
+                <div className="cardNumber">Card number: {card.cardNumber}</div>
+                <div className="bankName">
+                  <span className="boldLabel">Bank:</span> {card.bankName}
                 </div>
-              </li>
-            </div>
-          ))}
+              </div>
+            </li>
+          </div>
+        ))}
         {selectedCard && (
           <CardDetails
             card={selectedCard}
