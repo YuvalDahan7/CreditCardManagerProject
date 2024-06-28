@@ -7,7 +7,7 @@ namespace backend.Services
     public class CardService : ICardService
     {
         static List<Card> cards = mockData.Cards;
-        public List<Card> GetCards(bool? isBlocked = null, string? cardNumber = null, string? bankName = null)
+        public List<Card> GetCards(bool? isBlocked = null, string? cardNumber = null, string? bankCode = null)
         {
 
             if (isBlocked.HasValue)
@@ -20,9 +20,9 @@ namespace backend.Services
                 cards = cards.Where(c => c.CardNumber.Contains(cardNumber)).ToList();
             }
 
-            if (!string.IsNullOrEmpty(bankName))
+            if (!string.IsNullOrEmpty(bankCode))
             {
-                cards = cards.Where(c => c.BankName == bankName).ToList();
+                cards = cards.Where(c => c.BankCode == bankCode).ToList();
             }
 
             return cards.ToList();
