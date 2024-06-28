@@ -22,7 +22,7 @@ namespace backend.Services
 
             if (!string.IsNullOrEmpty(bankCode))
             {
-                cards = cards.Where(c => c.BankName == bankCode).ToList();
+                cards = cards.Where(c => c.BankCode == bankCode).ToList();
             }
 
             return cards.ToList();

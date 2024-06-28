@@ -16,6 +16,7 @@ function DisplayCardList({
 
   const handleCardDetails = (card) => {
     setSelectedCard(card);
+    console.log(cards);
   };
 
   const handleClose = () => {
@@ -44,8 +45,8 @@ function DisplayCardList({
         (filters.cardNumber === "" ||
           card.cardNumber.includes(filters.cardNumber)) &&
         (filters.isBlocked === "" ||
-         String(card.isBlocked) === filters.isBlocked) 
-        // (filters.bankCode === "All" || card.bankCode === filters.bankCode)
+         String(card.isBlocked) === filters.isBlocked) &&
+        (filters.bankCode === "All" || card.bankCode === filters.bankCode)
       );
     });
     setFilteredCards(filtered);
