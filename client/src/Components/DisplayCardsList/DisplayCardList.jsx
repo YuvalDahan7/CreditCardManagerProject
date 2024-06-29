@@ -54,6 +54,10 @@ function DisplayCardList({
     setFilteredCards(filtered);
   };
 
+  const handleResetFilter = () => {
+    setFilteredCards(cards); 
+  };
+
   useEffect(() => {
     refreshCards();
   }, []);
@@ -66,7 +70,7 @@ function DisplayCardList({
         </div>
 
         <div className="filterCards">
-          <FilterCards onFilter={handleFilter} />
+          <FilterCards onFilter={handleFilter} onReset={handleResetFilter} />
         </div>
       </div>
 

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./FilterCards.css";
 
-function FilterCards({ onFilter }) {
-  const [filters, setFilters] = useState({
-    cardNumber: '',
+function FilterCards({ onFilter, onReset }) {
+  const defaultFilters = {
     isBlocked: 'All',
+    cardNumber: '',
     bankCode: 'All',
-  });
+  };
+
+  const [filters, setFilters] = useState(defaultFilters);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -14,6 +16,11 @@ function FilterCards({ onFilter }) {
       ...prevFilters,
       [name]: value,
     }));
+  };
+
+  const handleReset = () => {
+    setFilters(defaultFilters);
+    onReset();
   };
 
   useEffect(() => {
@@ -58,6 +65,7 @@ function FilterCards({ onFilter }) {
           <option value="004">004</option>
         </select>
       </div>
+      <button onClick={handleReset}>Reset Filters</button>
     </div>
   );
 }
